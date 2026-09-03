@@ -12,6 +12,9 @@ export default function Navigation() {
       <li>
         <Link href="/about">About</Link>
       </li>
+      <li>
+        <Link href="/account">Account</Link>
+      </li>
     </ul>
   );
 }
