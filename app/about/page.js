@@ -1,12 +1,21 @@
 import about1 from "@/public/about-1.jpg";
 import about2 from "@/public/about-2.jpg";
 import Image from "next/image";
+import { getCabins } from "../_lib/data-service";
+
+// revalidate once per day
+export const revalidate = 60 * 60 * 60;
+
 export const metadata = {
   title: "About",
   description: "Learn more about The Wild Oasis.",
 };
 
-export default function Page() {
+export default async function Page() {
+  const cabins = await getCabins();
+  if (!cabins || cabins.length === 0) {
+    return null;
+  }
   return (
     <div className="grid grid-cols-5 gap-x-24 gap-y-32 text-lg items-center">
       <div className="col-span-3">
@@ -23,10 +32,11 @@ export default function Page() {
             and enjoying simple pleasures with family.
           </p>
           <p>
-            Our 8 luxury cabins provide a cozy base, but the real freedom and
-            peace you&apos;ll find in the surrounding mountains. Wander through
-            lush forests, breathe in the fresh air, and watch the stars twinkle
-            above from the warmth of a campfire or your hot tub.
+            Our {cabins.length || ""} luxury cabins provide a cozy base, but the
+            real freedom and peace you&apos;ll find in the surrounding
+            mountains. Wander through lush forests, breathe in the fresh air,
+            and watch the stars twinkle above from the warmth of a campfire or
+            your hot tub.
           </p>
           <p>
             This is where memorable moments are made, surrounded by
@@ -67,12 +77,12 @@ export default function Page() {
             dedication to creating a warm, welcoming environment.
           </p>
           <p>
-            Over the years, we've maintained the essence of The Wild Oasis,
+            Over the years, we&apos;ve maintained the essence of The Wild Oasis,
             blending the timeless beauty of the mountains with the personal
-            touch only a family business can offer. Here, you're not just a
-            guest; you're part of our extended family. So join us at The Wild
-            Oasis soon, where tradition meets tranquility, and every visit is
-            like coming home.
+            touch only a family business can offer. Here, you&apos;re not just a
+            guest; you&apos;re part of our extended family. So join us at The
+            Wild Oasis soon, where tradition meets tranquility, and every visit
+            is like coming home.
           </p>
 
           <div>

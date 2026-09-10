@@ -2,6 +2,10 @@ import { Suspense } from "react";
 import CabinList from "./CabinList";
 import Spinner from "../_components/Spinner";
 
+
+// after 1 hour, the page will be revalidated and updated with new data
+export const revalidate = 3600;
+
 export const metadata = {
   title: "Cabins",
 };
