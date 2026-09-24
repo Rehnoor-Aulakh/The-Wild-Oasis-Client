@@ -2,7 +2,6 @@ import { Suspense } from "react";
 import CabinList from "./CabinList";
 import Spinner from "../_components/Spinner";
 
-
 // after 1 hour, the page will be revalidated and updated with new data
 export const revalidate = 3600;
 
@@ -10,7 +9,11 @@ export const metadata = {
   title: "Cabins",
 };
 
-export default function Page() {
+// everything in url with ? comes in the searchParams
+// only available in Page.js
+export default function Page({ searchParams }) {
+  const filter = searchParams?.capacity ?? "all";
+
   return (
     <div>
       <h1 className="text-4xl mb-5 text-accent-400 font-medium">
@@ -26,7 +29,7 @@ export default function Page() {
       </p>
 
       <Suspense fallback={<Spinner />}>
-        <CabinList />
+        <CabinList filter={filter} />
       </Suspense>
     </div>
   );
