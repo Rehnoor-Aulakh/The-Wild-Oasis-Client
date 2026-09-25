@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import CabinList from "./CabinList";
 import Spinner from "../_components/Spinner";
+import Filter from "../_components/Filter";
 
 // after 1 hour, the page will be revalidated and updated with new data
 export const revalidate = 3600;
@@ -11,6 +12,7 @@ export const metadata = {
 
 // everything in url with ? comes in the searchParams
 // only available in Page.js
+// searchParams makes the page dynamically rendered, so revalidate does not work here now
 export default function Page({ searchParams }) {
   const filter = searchParams?.capacity ?? "all";
 
@@ -27,8 +29,10 @@ export default function Page({ searchParams }) {
         home away from home. The perfect spot for a peaceful, calm vacation.
         Welcome to paradise.
       </p>
-
-      <Suspense fallback={<Spinner />}>
+      <div className="flex justify-end mb-8">
+        <Filter />
+      </div>
+      <Suspense fallback={<Spinner />} key={filter}>
         <CabinList filter={filter} />
       </Suspense>
     </div>
